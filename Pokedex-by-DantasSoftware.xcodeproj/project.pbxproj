@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C31DE6CE1D148BA900D68C0F /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31DE6CD1D148BA900D68C0F /* Pokemon.swift */; };
+		C31DE6D21D1498B000D68C0F /* PokeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31DE6D11D1498B000D68C0F /* PokeCell.swift */; };
 		C3D281B01D13411C00339C4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D281AF1D13411C00339C4D /* AppDelegate.swift */; };
 		C3D281B21D13411C00339C4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D281B11D13411C00339C4D /* ViewController.swift */; };
 		C3D281B51D13411C00339C4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3D281B31D13411C00339C4D /* Main.storyboard */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C31DE6CD1D148BA900D68C0F /* Pokemon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		C31DE6D11D1498B000D68C0F /* PokeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokeCell.swift; sourceTree = "<group>"; };
 		C3D281AC1D13411C00339C4D /* Pokedex-by-DantasSoftware.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pokedex-by-DantasSoftware.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D281AF1D13411C00339C4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3D281B11D13411C00339C4D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +80,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C31DE6CF1D14985200D68C0F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C31DE6CD1D148BA900D68C0F /* Pokemon.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		C31DE6D01D14986800D68C0F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C31DE6D11D1498B000D68C0F /* PokeCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		C3D281A31D13411C00339C4D = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +119,8 @@
 		C3D281AE1D13411C00339C4D /* Pokedex-by-DantasSoftware */ = {
 			isa = PBXGroup;
 			children = (
+				C31DE6CF1D14985200D68C0F /* Model */,
+				C31DE6D01D14986800D68C0F /* View */,
 				C3D281DD1D13443800339C4D /* pokemon.csv */,
 				C3D281AF1D13411C00339C4D /* AppDelegate.swift */,
 				C3D281B11D13411C00339C4D /* ViewController.swift */,
@@ -196,6 +218,7 @@
 				TargetAttributes = {
 					C3D281AB1D13411C00339C4D = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 2K6N9E42FC;
 					};
 					C3D281BF1D13411C00339C4D = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -260,8 +283,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C31DE6D21D1498B000D68C0F /* PokeCell.swift in Sources */,
 				C3D281B21D13411C00339C4D /* ViewController.swift in Sources */,
 				C3D281B01D13411C00339C4D /* AppDelegate.swift in Sources */,
+				C31DE6CE1D148BA900D68C0F /* Pokemon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,7 +430,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Pokedex-by-DantasSoftware/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.DantasSoftware.Timer.Pokedex-by-DantasSoftware";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -416,7 +443,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Pokedex-by-DantasSoftware/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.DantasSoftware.Timer.Pokedex-by-DantasSoftware";
 				PRODUCT_NAME = "$(TARGET_NAME)";
