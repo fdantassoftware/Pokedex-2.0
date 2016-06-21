@@ -9,20 +9,21 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate  {
+class MainViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate  {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     var pokemon = [Pokemon]()
     var mPlayer: AVAudioPlayer!
     var inSearchMode = false
     var filteredPokemon = [Pokemon]()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
         parsePokemonCSV()
+        
         initAudio()
+        
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.Done
         
@@ -42,16 +43,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let name = row["identifier"]
                 let poke = Pokemon(name: name!, pokedexId: pokeId)
                 pokemon.append(poke)
-                
-                
-                
-                
-                
               
-            
-                
-                
-                
             }
         
         } catch {
@@ -59,17 +51,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             print(error)
         }
             
-            
-            
-        
-        
-        
-        
+  
         
     }
 
-    
-    
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
@@ -99,9 +84,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
 
 
- 
-
-    
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -151,12 +133,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if mPlayer.playing {
             mPlayer.stop()
-            sender.alpha = 0.2
-            
+            sender.alpha = 0.5
         } else {
             mPlayer.play()
             sender.alpha = 1.0
         }
+        
+      
+            
         
         
     }
@@ -170,6 +154,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             mPlayer.prepareToPlay()
             mPlayer.numberOfLoops = -1
             mPlayer.play()
+         
         
         } catch {
             
@@ -192,10 +177,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
         }
     }
-
-
-
-
 
 
 
