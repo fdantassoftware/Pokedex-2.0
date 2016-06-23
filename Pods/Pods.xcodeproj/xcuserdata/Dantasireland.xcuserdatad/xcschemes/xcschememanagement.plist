@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Pokedex-by-DantasSoftware.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3FF0E73814383F6485BE0F1FE9677A48</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>62585B784235E68B5B49483E6F085837</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>69E4D358154E09D3A8C753B0A2CF49CD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A99262293F8696CF5B370C79C0742C6B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

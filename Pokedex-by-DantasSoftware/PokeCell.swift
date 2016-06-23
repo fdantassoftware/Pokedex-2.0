@@ -19,15 +19,29 @@ class PokeCell: UICollectionViewCell {
         
     }
     
+    
+    // Custom Cell
+    
     func configureCell(pokemon: Pokemon) {
         
         self.pokemon = pokemon
-        nameLabel.text = self.pokemon.name.capitalizedString
-        thumbImg.image = UIImage(named: "\(self.pokemon.pokedexId)")
-      
         
+        if String(pokemon.pokedexId).characters.count == 1 {
+            
+            nameLabel.text = "#00\(self.pokemon.pokedexId) \(self.pokemon.name)"
+        
+        } else if String(pokemon.pokedexId).characters.count == 2 {
+            
+            nameLabel.text = "#0\(self.pokemon.pokedexId) \(self.pokemon.name)"
+            
+        } else {
+            
+            nameLabel.text = "#\(self.pokemon.pokedexId) \(self.pokemon.name)"
+          
+        }
+        
+       thumbImg.image = UIImage(named: "\(self.pokemon.pokedexId)")
+    
     }
-    
-    
-    
+ 
 }

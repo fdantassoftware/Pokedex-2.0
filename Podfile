@@ -8,6 +8,9 @@ target 'Pokedex-by-DantasSoftware' do
   # Pods for Pokedex-by-DantasSoftware
 
 
+    pod 'Alamofire', '~> 3.4'
+
+
   target 'Pokedex-by-DantasSoftwareTests' do
     inherit! :search_paths
     # Pods for testing

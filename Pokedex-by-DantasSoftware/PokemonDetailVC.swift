@@ -20,7 +20,6 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var desImg: UIImageView!
     @IBOutlet weak var weightLabel: UILabel!
     @IBOutlet weak var heightLabel: UILabel!
-    
     @IBOutlet weak var evolutionLvLabel: UILabel!
     @IBOutlet weak var evolutionNameLabel: UILabel!
     @IBOutlet weak var speedLabel: UILabel!
@@ -32,25 +31,50 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var desLabel: UILabel!
-    
    
     override func viewDidLoad() {
         super.viewDidLoad()
         pokemonName.text = pokemon.name.capitalizedString
         desImg.image = UIImage.gifWithName(String(pokemon.pokedexId))
-        evolutionImg.image = UIImage.gifWithName("2")
-        
+        idLabel.text = "#\(pokemon.pokedexId)"
+        pokemon.downloadPokemonDetails {
+            self.updateUI()
+          
+        }
      
     }
   
-
+    func updateUI() {
+        
+        desLabel.text = pokemon.description
+        weightLabel.text = pokemon.weight
+        heightLabel.text = pokemon.height
+        speedLabel.text = pokemon.speed
+        spAtkLabel.text = pokemon.spAttack
+        spDefLabel.text = pokemon.spDefense
+        defenseLabel.text = pokemon.defense
+        attackLabel.text = pokemon.attack
+        hpLabel.text = pokemon.hp
+        typeLabel.text = pokemon.type
+        evolutionLvLabel.text = pokemon.evolutionLv
+        evolutionNameLabel.text = pokemon.evolutionName
+        evolutionImg.image = UIImage.gifWithName(String(pokemon.nextEvolutionId))
+        
+        if pokemon.nextEvolutionId == "" {
+            
+            evolutionNameLabel.text = "No Evolution"
+            evolutionImg.hidden = true
+            evolutionLvLabel.text = "-"
+            
+        }
+      
+    }
+  
+    
     @IBAction func backButton(sender: AnyObject) {
         
         dismissViewControllerAnimated(true, completion: nil)
-        
-        
-            
-        
+   
     }
 
 }
