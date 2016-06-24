@@ -8,13 +8,10 @@
 
 import UIKit
 
-
-
-
 class PokemonDetailVC: UIViewController {
     var pokemon: Pokemon!
     var image = [UIImage]()
-
+    @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var pokemonName: UILabel!
     @IBOutlet weak var evolutionImg: UIImageView!
     @IBOutlet weak var desImg: UIImageView!
@@ -75,6 +72,36 @@ class PokemonDetailVC: UIViewController {
         
         dismissViewControllerAnimated(true, completion: nil)
    
+    }
+    @IBAction func segmentChanged(sender: UISegmentedControl) {
+        
+        
+        switch segment.selectedSegmentIndex {
+        case 1:
+            performSegueWithIdentifier("Moves", sender: nil)
+        default:
+            break
+            
+        }
+    }
+
+
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "Moves" {
+            if let movesVC = segue.destinationViewController as? MovesViewController {
+                movesVC.pokemonMoveName = self.pokemon.moveName
+                movesVC.pokemonMoveDescription = self.pokemon.movesDescription
+                movesVC.pokemonMoveLevel = self.pokemon.moveLevel
+                movesVC.pokemonMoveAccurancy = self.pokemon.moveAccurancy
+                movesVC.pokemonMovePower = self.pokemon.movePower
+                movesVC.pokemonMovePP = self.pokemon.movePP
+                movesVC.segment = self.segment
+                
+            }
+        }
+        
     }
 
 }

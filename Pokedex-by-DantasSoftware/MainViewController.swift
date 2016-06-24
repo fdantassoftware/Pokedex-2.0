@@ -138,11 +138,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
             mPlayer.play()
             sender.alpha = 1.0
         }
-        
-      
-            
-        
-        
+  
     }
 
     

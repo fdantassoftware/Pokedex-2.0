@@ -27,7 +27,13 @@ class Pokemon {
     private var _EvolutionLv: String!
     private var _pokemonUrl: String!
     private var _nextEvolutionId: String!
-  
+    private var _moveName = [String]()
+    private var _moveDescription = [String]()
+    private var _moveLevel = [String]()
+    private var _moveAccurancy = [String]()
+    private var _movePower = [String]()
+    private var _movePP = [String]()
+    
     
     // Hiding Data
     
@@ -37,22 +43,20 @@ class Pokemon {
         return _name
         
     }
-  
+    
     var pokedexId: Int {
         
         return _pokedexId
     }
     
-    
-    
+  
     var weight: String {
         if _weight == nil {
             _weight = ""
         }
         
         return _weight
-        
-        
+    
     }
     
     var height: String {
@@ -65,7 +69,7 @@ class Pokemon {
         
     }
     
- 
+    
     
     var speed: String {
         if _speed == nil {
@@ -75,7 +79,7 @@ class Pokemon {
         return _speed
     }
     
-
+    
     var spAttack: String {
         if _spAttack == nil {
             _spAttack = ""
@@ -84,7 +88,7 @@ class Pokemon {
         return  _spAttack
     }
     
-  
+    
     
     var spDefense: String {
         if _spDefense == nil {
@@ -94,7 +98,7 @@ class Pokemon {
         return _spDefense
     }
     
- 
+    
     
     var defense: String {
         if _defense == nil {
@@ -104,7 +108,7 @@ class Pokemon {
         return _defense
     }
     
-  
+    
     
     var attack: String {
         if _attack == nil {
@@ -113,7 +117,6 @@ class Pokemon {
         
         return _attack
     }
-    
   
     
     var hp: String {
@@ -125,8 +128,7 @@ class Pokemon {
         return _hp
     }
     
-  
-    
+   
     var type: String {
         if _type == nil {
             _type = ""
@@ -135,8 +137,7 @@ class Pokemon {
         return _type
     }
     
- 
-    
+   
     var description: String {
         if _description == nil {
             _description = ""
@@ -146,7 +147,6 @@ class Pokemon {
     }
     
  
-    
     var evolutionName: String {
         if _EvolutionName == nil {
             _EvolutionName = ""
@@ -154,7 +154,7 @@ class Pokemon {
         return _EvolutionName
     }
     
- 
+    
     
     var evolutionLv: String {
         if _EvolutionLv == nil {
@@ -164,8 +164,7 @@ class Pokemon {
         return _EvolutionLv
     }
     
-
-    
+  
     var nextEvolutionId: String {
         if _nextEvolutionId == nil {
             _nextEvolutionId = ""
@@ -173,8 +172,65 @@ class Pokemon {
         
         return _nextEvolutionId
     }
+  
     
-
+    var moveName: Array<String> {
+        
+        if _moveName.isEmpty {
+            
+            _moveName = ["Unknown"]
+        }
+        
+        return _moveName
+    }
+    
+    var movesDescription: Array<String>{
+        
+        if _moveDescription.isEmpty {
+            _moveDescription = ["Unknown"]
+        }
+        
+        return _moveDescription
+    }
+    
+    
+    var moveLevel: Array<String>{
+        
+        if _moveLevel.isEmpty {
+            _moveLevel = ["Lv - "]
+        }
+        
+        return _moveLevel
+    }
+    
+    var moveAccurancy: Array<String>{
+        
+        if _moveAccurancy.isEmpty {
+            _moveAccurancy = ["-"]
+        }
+        
+        return _moveAccurancy
+    }
+    
+    var movePower: Array<String>{
+        
+        if _movePP.isEmpty {
+            _movePower = ["-"]
+        }
+        
+        return _movePower
+    }
+    
+    var movePP: Array<String>{
+        
+        if _movePP.isEmpty {
+            _movePP = ["-"]
+        }
+        
+        return _movePP
+    }
+    
+    
     
     init(name: String, pokedexId: Int) {
         
@@ -182,7 +238,7 @@ class Pokemon {
         self._pokedexId = pokedexId
         self._pokemonUrl = "\(URL_BASE)\(URL_POKEMON)\(self.pokedexId)/"
     }
-  
+    
     
     // Mark: Download and Parse Data
     
@@ -227,9 +283,73 @@ class Pokemon {
                     self._hp = String(hp)
                 }
                 
+                
+                
                 if let types = dic["types"] as? [String:String] {
                     print(types.debugDescription)
                     
+                }
+                
+                
+                if let movesArray = dic["moves"] as? [Dictionary<String, AnyObject>] where movesArray.count > 0 {
+                    var urls = [String]()
+                  
+                    for move in movesArray {
+                    
+                        if let learn = move["learn_type"] as? String {
+                            if learn == "level up" {
+                                
+                                if let uri = move["resource_uri"] as? String {
+                                    
+                                    urls.append(uri)
+                                    for url in urls {
+                                        
+                                        let nurl = NSURL(string: "\(URL_BASE)\(url)")!
+                                        Alamofire.request(.GET, nurl).responseJSON(completionHandler: { (response) in
+                                            
+                                            if let dicMoves = response.result.value as? Dictionary<String, AnyObject> {
+                                                
+                                                if let des = dicMoves["description"] as? String {
+                                                    self._moveDescription.append(des)
+                                                    
+                                                }
+                                                
+                                                if let accurancy = dicMoves["accuracy"] as? Int {
+                                                    self._moveAccurancy.append(String(accurancy))
+                                                }
+                                                
+                                                if let power = dicMoves["power"] as? Int {
+                                                    self._movePower.append(String(power))
+                                                }
+                                                
+                                                
+                                                if let pp = dicMoves["pp"] as? Int {
+                                                    self._movePP.append(String(pp))
+                                                }
+                                             
+                                            }
+                                            
+                                            
+                                            
+                                        })
+                                        
+                                    }
+                                }
+                                if let name = move["name"] as? String {
+                                    self._moveName.append(name)
+                                    
+                                    
+                                }
+                                
+                                if let level = move["level"] as? Int {
+                                    self._moveLevel.append(String("Lv - \(level)"))
+                                    print(self._moveLevel)
+                                }
+                            
+                            }
+                        }
+                    }
+               
                 }
                 
                 
@@ -256,19 +376,20 @@ class Pokemon {
                     if let url = descArray[0]["resource_uri"] as? String {
                         
                         let nurl = NSURL(string: "\(URL_BASE)\(url)")!
+                        
                         Alamofire.request(.GET, nurl).responseJSON(completionHandler: { (response) in
                             
                             if let descDic = response.result.value as? Dictionary<String, AnyObject> {
                                 if let description = descDic["description"] as? String {
                                     self._description = description
-                                    print(self._description)
+                                    
                                 }
                             }
-                          
+                            
                             completed()
-                        
+                            
                         })
-                     
+                        
                     }
                     
                     
@@ -278,10 +399,10 @@ class Pokemon {
                 }
                 
                 if let evolutions = dic["evolutions"] as? [Dictionary<String, AnyObject>] where evolutions.count > 0 {
-                  
+                    
                     if let to = evolutions[0]["to"] as? String {
                         
-                     
+                        
                         // Cannot support mega pokemons but APi still has mega Data
                         
                         if to.rangeOfString("mega") == nil {
@@ -296,7 +417,7 @@ class Pokemon {
                                     if method != "level_up" {
                                         self._EvolutionLv = "Lv - \(method)"
                                         self._EvolutionName = to
-                                    
+                                        
                                     } else {
                                         
                                         if let lv = evolutions[0]["level"] as? Int {
@@ -306,12 +427,12 @@ class Pokemon {
                                         }
                                     }
                                 }
-                          
+                                
                             }
                         }
                         
                     }
-                 
+                    
                 }
                 
             }

@@ -28,15 +28,15 @@ class PokeCell: UICollectionViewCell {
         
         if String(pokemon.pokedexId).characters.count == 1 {
             
-            nameLabel.text = "#00\(self.pokemon.pokedexId) \(self.pokemon.name)"
+            nameLabel.text = "#00\(self.pokemon.pokedexId) \(self.pokemon.name.capitalizedString)"
         
         } else if String(pokemon.pokedexId).characters.count == 2 {
             
-            nameLabel.text = "#0\(self.pokemon.pokedexId) \(self.pokemon.name)"
+            nameLabel.text = "#0\(self.pokemon.pokedexId) \(self.pokemon.name.capitalizedString)"
             
         } else {
             
-            nameLabel.text = "#\(self.pokemon.pokedexId) \(self.pokemon.name)"
+            nameLabel.text = "#\(self.pokemon.pokedexId) \(self.pokemon.name.capitalizedString)"
           
         }
         
