@@ -55,6 +55,7 @@ class MovesViewController: UIViewController, UITableViewDelegate, UITableViewDat
       
     }
 
+   
 
     @IBAction func backButton(sender: AnyObject) {
         
@@ -62,5 +63,5 @@ class MovesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.segment.selectedSegmentIndex = 0
     }
 
-
+  
 }

@@ -11,6 +11,9 @@ import UIKit
 class PokemonDetailVC: UIViewController {
     var pokemon: Pokemon!
     var image = [UIImage]()
+    var pokemonNameArray = [String]()
+    var pokemonIdArray = [Int]()
+    
     @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var pokemonName: UILabel!
     @IBOutlet weak var evolutionImg: UIImageView!
@@ -28,6 +31,7 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var desLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,6 +90,27 @@ class PokemonDetailVC: UIViewController {
     }
 
 
+    @IBAction func addPressed(sender: AnyObject) {
+        
+        let myPokemons = storyboard?.instantiateViewControllerWithIdentifier("MyPokemons") as? MyPokemonsViewController
+        
+        for  id in pokemonIdArray {
+            if id == self.pokemon.pokedexId {
+                backButton.enabled = false
+                
+            }
+            
+        }
+        
+        pokemonNameArray.append(self.pokemon.name)
+        pokemonIdArray.append(self.pokemon.pokedexId)
+       
+        myPokemons?.pokemonName = pokemonNameArray
+        myPokemons?.pokemonId = pokemonIdArray
+        myPokemons?.pokemon = self.pokemon
+        myPokemons?.addButton = self.backButton
+        presentViewController(myPokemons!, animated: true, completion: nil)
+    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
