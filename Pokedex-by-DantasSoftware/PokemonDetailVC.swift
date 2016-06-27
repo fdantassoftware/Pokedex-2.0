@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import CoreData
+import AVFoundation
 
-class PokemonDetailVC: UIViewController {
+class PokemonDetailVC: UIViewController, NSFetchedResultsControllerDelegate {
     var pokemon: Pokemon!
     var image = [UIImage]()
     var pokemonNameArray = [String]()
     var pokemonIdArray = [Int]()
+     var fetchedResultsController: NSFetchedResultsController!
     
     @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var pokemonName: UILabel!
@@ -32,19 +35,56 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var desLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
+    var moc: NSManagedObjectContext!
+    var normalIMG: UIImage!
+    var musicPlayer: AVAudioPlayer!
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        initializefetchedResultsController()
+        normalIMG = UIImage(named: String(self.pokemon.pokedexId))
+        moc = CoreDataHelper.manageObjectContext()
         pokemonName.text = pokemon.name.capitalizedString
         desImg.image = UIImage.gifWithName(String(pokemon.pokedexId))
         idLabel.text = "#\(pokemon.pokedexId)"
         pokemon.downloadPokemonDetails {
             self.updateUI()
+            
           
         }
      
     }
   
+    
+    
+    func initializefetchedResultsController() {
+   
+    let request = NSFetchRequest(entityName: "Pokemons")
+    let sortDescriptors = NSSortDescriptor(key: "createdAt", ascending: true)
+    request.sortDescriptors = [sortDescriptors]
+    
+    
+    let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    
+    fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
+    fetchedResultsController.delegate = self
+    
+    
+    do {
+    
+    try fetchedResultsController.performFetch()
+    } catch {
+    
+    fatalError("Failed to inialize\(error)")
+    }
+    
+    
+    }
+
+    
+    
+    
+    
     func updateUI() {
         
         desLabel.text = pokemon.description
@@ -92,26 +132,49 @@ class PokemonDetailVC: UIViewController {
 
     @IBAction func addPressed(sender: AnyObject) {
         
-        let myPokemons = storyboard?.instantiateViewControllerWithIdentifier("MyPokemons") as? MyPokemonsViewController
+        let myPokemons = storyboard?.instantiateViewControllerWithIdentifier("MyPokemons") as! MyPokemonsViewController
+
+        let newPokemon = CoreDataHelper.insertManageObeject(NSStringFromClass(Pokemons), manageObjectContext: moc) as! Pokemons
+        newPokemon.name = self.pokemon.name
+        newPokemon.image = UIImageJPEGRepresentation(normalIMG, 0.5)
+        newPokemon.id = String(self.pokemon.pokedexId)
         
-        for  id in pokemonIdArray {
-            if id == self.pokemon.pokedexId {
-                backButton.enabled = false
-                
-            }
+        do {
             
+            try moc.save()
+
+            
+        } catch {
+            
+            print(error)
         }
-        
-        pokemonNameArray.append(self.pokemon.name)
-        pokemonIdArray.append(self.pokemon.pokedexId)
-       
-        myPokemons?.pokemonName = pokemonNameArray
-        myPokemons?.pokemonId = pokemonIdArray
-        myPokemons?.pokemon = self.pokemon
-        myPokemons?.addButton = self.backButton
-        presentViewController(myPokemons!, animated: true, completion: nil)
+   
+        presentViewController(myPokemons, animated: true, completion: nil)
+        playGotNewpokemon()
+    
     }
 
+    
+    
+    func playGotNewpokemon() {
+        
+        let path = NSBundle.mainBundle().pathForResource("got", ofType: "wav")
+        do {
+            musicPlayer = try AVAudioPlayer(contentsOfURL: NSURL(string: path!)!)
+            musicPlayer.prepareToPlay()
+            musicPlayer.play()
+            
+            
+        } catch {
+            
+            print(error)
+        }
+    }
+
+    
+    
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "Moves" {

@@ -11,6 +11,7 @@ import UIKit
 class MyPokemonsCell: UICollectionViewCell {
     @IBOutlet weak var mainIMG: UIImageView!
     @IBOutlet weak var mainLabel: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
     
   
     

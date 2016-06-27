@@ -55,7 +55,6 @@ class MovesViewController: UIViewController, UITableViewDelegate, UITableViewDat
       
     }
 
-   
 
     @IBAction func backButton(sender: AnyObject) {
         
